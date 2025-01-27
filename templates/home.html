@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Home - NewsHub{% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5" >
+    <!-- Hero Section -->
+    <h2 style="color:blue; text-align:center; font-weight: bold;" >welcome to my website </h2>
+    <div class="bg-light text-center p-5 mb-4 rounded" style="background-color: black;">
+
+        <h4> News Hub</h4>
+        <p class="lead">Your trusted source for breaking news, insightful articles, and trending updates from around the world.</p>
+        <a href="{% url 'news_list' %}" class="btn btn-primary btn-lg">explore more</a>
+    </div>
+
+    <!-- Latest News Section -->
+    <h3 class="mb-4">news updates</h3>
+    <div class="row" >
+        <!-- Example news items (Replace with dynamic content later) -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{% static 'local.jpg' %}" class="card-img-top" alt="News Image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">local news</h5>
+{#                    <h5 class="card-title">City to Build New Park in Downtown Area"</h5>#}
+{#                    <p class="card-text">This is a brief description of the news about In our family, we are three children. Each of us has our own unique personality, but we share a strong bond. We love spending time together, whether it's playing games, chatting, or helping each other out. Growing up as siblings has taught us a lot about teamwork, kindness, and understandingarticle...</p>#}
+{#                    <a href="#" class="btn btn-primary">Read More</a>#}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{% static 'winning.jpg' %}" class="card-img-top" alt="News Image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Winning Team</h5>
+{#                    <h6> class="card-title"> The winning team celebrating with a trophy.</h6>#}
+{#                    <p class="card-text">This is a brief description of the news for me I am a student at the University of California, Los Angeles...</p>#}
+{#                    <a href="#" class="btn btn-primary">Read More</a>#}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{% static 'leader.webp' %}" class="card-img-top" alt="News Image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">International News</h5>
+{#                    <p class="card-text">This is a brief description of the news about our team, we are a group of four students who are passionate about technology and innovation...</p>#}
+{#                    <a href="" class="btn btn-primary">Read More</a>#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action Section -->
+    <div class="text-center py-4">
+        <h3>Stay Updated with NewsHub</h3>
+        <p>Subscribe to our newsletter for the latest updates straight to your inbox!</p>
+        <a href="{% url 'contact_us' %}" class="btn btn-warning btn-lg">Contact Us</a>
+    </div>
+</div>
+{% endblock %}

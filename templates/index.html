@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-center" style="margin-top: 30px; color:blue"> Welcome to my website!</h3>
+
+ <div class="container py-5">
+    <h3 class="text-center mb-5">Latest News</h3>
+    <div class="row g-4">
+      {% for news in news_list %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ news.title }}</h5>
+              <p class="text-muted mb-2">Published on: {{ news.date }}</p>
+              <p class="card-text">{{ news.summary|truncatewords:20 }}</p>
+              <a href="{% url 'news_detail' news.url %}" class="btn btn-primary mt-auto">Read More</a>
+                <img src="{{ news.image.url }}" class="card-img-bottom" alt="{{ news.title }}">
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}

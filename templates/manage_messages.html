@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Messages</title>
+</head>
+<body>
+    <h1>Manage Messages</h1>
+    <ul>
+        {% for message in messages %}
+            <li>{{ message.user.username }}: {{ message.content }} ({{ message.created_at }})</li>
+        {% empty %}
+            <li>No messages found.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

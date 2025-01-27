@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}About Us - NewsHub{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">About Us</h1>
+    <div class="row">
+        <!-- Left Content -->
+        <div class="col-md-6">
+            <p class="lead">
+                Welcome to <strong>NewsHub</strong>, your go-to platform for reliable and up-to-date news from around the world.
+                We are dedicated to delivering the latest news in technology, sports, politics, and more.
+            </p>
+            <p>
+                At NewsHub, we believe in providing accurate and balanced news that empowers our readers with knowledge.
+                Our team of experienced journalists and editors work tirelessly to bring you stories that matter most.
+            </p>
+        </div>
+        <!-- Right Image -->
+        <div class="col-md-6">
+            <img src="{% static 'about.jpeg' %}" alt="About Us" class="img-fluid rounded shadow" style="height:500px; width: 100%; object-fit: cover;">
+        </div>
+    </div>
+
+    <!-- Our Mission -->
+    <div class="mt-5">
+        <h2>Our Mission</h2>
+        <p>
+            Our mission is to inform, educate, and inspire our audience with trustworthy news that fosters awareness and understanding.
+            We strive to be a reliable source for individuals seeking to stay informed in today's fast-paced world.
+        </p>
+    </div>
+
+    <!-- Our Values -->
+    <div class="mt-4">
+        <h2>Our Values</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Integrity: Committed to truth and transparency in every story.</li>
+            <li class="list-group-item">Inclusivity: Sharing stories that represent diverse voices and perspectives.</li>
+            <li class="list-group-item">Excellence: Delivering high-quality journalism to our readers.</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
