@@ -29,11 +29,25 @@ path('password_reset/', password_reset_request, name='password_reset'),
     path('password_reset_verify/', password_reset_verify, name='password_reset_verify'),
   path('dashboard/', dashboard, name='dashboard'),
     path('add-news/', add_news, name='add_news'),
+    path('deactivate-user/<int:user_id>/', deactivate_user, name='deactivate_user'),
     path('add-article/', add_article, name='add_article'),
     path('manage-users/', manage_users, name='manage_users'),
-    path('manage-messages/', manage_messages, name='manage_messages'),
+path('grant-admin/<int:user_id>/', grant_admin, name='grant_admin'),
+    # path('manage-messages/', manage_messages, name='manage_messages'),
+path('revoke-admin/<int:user_id>/', revoke_admin, name='revoke_admin'),
+
 path('update-user/<int:user_id>/', update_user, name='update_user'),
     path('delete-user/<int:user_id>/', delete_user, name='delete_user'),
+    path('activate-user/<int:user_id>/', activate_user, name='activate_user'),
+    path('redirect-to-home/',redirect_to_home, name='redirect_to_home'),
+    path('manage-news/', manage_news, name='manage_news'),
+    path('articles/', articles, name='articles'),
+    path('messages/', messages, name='messages'),
+    path('articles/add/', add_article, name='add_article'),
+    path('articles/edit/<int:article_id>/', edit_article, name='edit_article'),
+    path('articles/delete/<int:article_id>/', delete_article, name='delete_article'),
+
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

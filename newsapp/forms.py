@@ -80,3 +80,14 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email']
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)
+
+    # Optionally, you can add a success method here if needed.
+    def success(self):
+        # Define the behavior when the form is successfully submitted.
+        pass
+

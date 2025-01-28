@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #2980b9;
+            color: white;
+        }
+        .message-content {
+            color: #555;
+        }
+        .reply-form {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+        .reply-form textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .reply-form button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .reply-form button:hover {
+            background-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <h1>Messages</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sender</th>
+                <th>Message</th>
+                <th>Date</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Reply</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+            <tr>
+                <td>{{ message.name }}</td>
+                <td class="message-content">{{ message.message }}</td>
+                <td>{{ message.created_at }}</td>
+                <td>{{ message.email }}</td>
+                <td>{{ message.phone }}</td>
+                <td>
+                    <a href="#reply-form" onclick="showReplyForm({{ message.id }}, '{{ message.name }}', '{{ message.email }}')">Reply</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center;">No messages found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div id="reply-form" class="reply-form" style="display: none;">
+        <h2>Reply to <span id="sender-name"></span></h2>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="message-id" name="message_id" value="">
+            <label for="body">Your reply:</label><br>
+            <textarea name="body" rows="4" cols="50"></textarea><br><br>
+            <button type="submit">Send Reply</button>
+        </form>
+    </div>
+
+    <script>
+        function showReplyForm(messageId, senderName, senderEmail) {
+            document.getElementById('sender-name').innerText = senderName;
+            document.getElementById('message-id').value = messageId;
+            document.getElementById('reply-form').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

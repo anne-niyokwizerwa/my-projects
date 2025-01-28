@@ -33,27 +33,46 @@
 
       </ul>
 
+{#        <nav>#}
+{#        {% if user.is_authenticated %}#}
+{#            <!-- Show Logout Button and Welcome Message -->#}
+{#            Welcome, {{ user.username }}!#}
+{##}
+{#                <form method="POST" action="{% url 'logout' %}">#}
+{#                    {% csrf_token %}#}
+{#                    <button type="submit" class="btn btn-danger">Logout</button>#}
+{#                </form>#}
+{##}
+{#        {% else %}#}
+{#            <!-- Show Login and Sign Up Buttons -->#}
+{#            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>#}
+{#            <a href="{% url 'signup' %}" class="btn btn-secondary">Sign Up</a>#}
+{#        {% endif %}#}
+{##}
+{#</nav>#}
         <nav>
-        {% if user.is_authenticated %}
-            <!-- Show Logout Button and Welcome Message -->
-            Welcome, {{ user.username }}!
+    {% if user.is_authenticated %}
+        <!-- Welcome Message and Logout -->
+        <span>Welcome, {{ user.username }}!</span>
 
-                <form method="POST" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Logout</button>
-                </form>
-
-        {% else %}
-            <!-- Show Login and Sign Up Buttons -->
-            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
-            <a href="{% url 'signup' %}" class="btn btn-secondary">Sign Up</a>
+        <!-- Show Dashboard Link for Admin Users -->
+        {% if user.is_staff %}
+            <a href="{% url 'dashboard' %}" class="btn btn-info">Dashboard</a>
         {% endif %}
 
+        <!-- Logout Form -->
+        <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    {% else %}
+        <!-- Login and Sign Up Buttons -->
+        <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+        <a href="{% url 'signup' %}" class="btn btn-secondary">Sign Up</a>
+    {% endif %}
 </nav>
-{#      <form class="d-flex" role="search">#}
-{#        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">#}
-{#        <button class="btn btn-outline-success" type="submit">Search</button>#}
-{#      </form>#}
+
+
      <form method="get" action="{% url 'search_results' %}" class="mb-4">
         <div class="input-group">
             <input type="text" class="form-control" name="query" placeholder="Search news..." value="{{ request.GET.query }}">

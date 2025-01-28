@@ -1,3 +1,64 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Admin Dashboard</title>#}
+{#    <style>#}
+{#        body {#}
+{#            font-family: Arial, sans-serif;#}
+{#            margin: 0;#}
+{#            padding: 0;#}
+{#            display: flex;#}
+{#            flex-direction: column;#}
+{#        }#}
+{#        header {#}
+{#            background-color: #2980b9;#}
+{#            color: white;#}
+{#            padding: 10px 20px;#}
+{#            text-align: center;#}
+{#        }#}
+{#        .main-content {#}
+{#            padding: 20px;#}
+{#        }#}
+{#        footer {#}
+{#            text-align: center;#}
+{#            padding: 10px;#}
+{#            background-color: #bdc3c7;#}
+{#            color: black;#}
+{#            position: relative;#}
+{#            bottom: 0;#}
+{#            width: 100%;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<header>#}
+{#    <h1>Admin Dashboard</h1>#}
+{#</header>#}
+{#<a style="margin-top: 0; margin-left: 500px;" href="{% url 'redirect_to_home' %}" class="btn btn-primary">Go to Home</a>#}
+{##}
+{#<div class="main-content">#}
+{##}
+{#    <h2>Overview</h2>#}
+{#    <p>Total News Articles: <strong>{{ total_news }}</strong></p>#}
+{#    <p>Total Articles: <strong>{{ total_articles }}</strong></p>#}
+{#    <p>Total Users: <strong>{{ total_users }}</strong></p>#}
+{#     <p>Total News Articles: <strong>{{ total_news }}</strong></p>#}
+{#    <p>Total Messages: <strong>{{ total_Messages }}</strong></p>#}
+{##}
+{#    <button onclick="location.href='{% url 'add_news' %}'">Add News</button>#}
+{#    <button onclick="location.href='{% url 'add_article' %}'">Add Article</button>#}
+{#    <button onclick="location.href='{% url 'manage_users' %}'">Manage Users</button>#}
+{#</div>#}
+{##}
+{#<footer>#}
+{#    <p>&copy; 2025 Your News Website</p>#}
+{#</footer>#}
+{##}
+{#</body>#}
+{#</html>#}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +78,22 @@
             color: white;
             padding: 10px 20px;
             text-align: center;
+        }
+        nav {
+            background-color: #3498db;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            text-align: center;
+        }
+        nav a:hover {
+            background-color: #1e6a9b;
         }
         .main-content {
             padding: 20px;
@@ -38,10 +115,21 @@
     <h1>Admin Dashboard</h1>
 </header>
 
+<nav>
+    <a href="{% url 'manage_news' %}">News</a>
+    <a href="{% url 'articles' %}">Articles</a>
+    <a href="{% url 'messages' %}">Messages</a>
+    <a href="{% url 'manage_users' %}">Users</a>
+
+</nav>
+
 <div class="main-content">
     <h2>Overview</h2>
     <p>Total News Articles: <strong>{{ total_news }}</strong></p>
     <p>Total Articles: <strong>{{ total_articles }}</strong></p>
+    <p>Total Users: <strong>{{ total_users }}</strong></p>
+    <p>Total Messages: <strong>{{ total_messages }}</strong></p>
+
     <button onclick="location.href='{% url 'add_news' %}'">Add News</button>
     <button onclick="location.href='{% url 'add_article' %}'">Add Article</button>
     <button onclick="location.href='{% url 'manage_users' %}'">Manage Users</button>

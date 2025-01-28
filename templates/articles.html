@@ -1,0 +1,153 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Articles</title>#}
+{#    <style>#}
+{#        body {#}
+{#            font-family: Arial, sans-serif;#}
+{#            margin: 0;#}
+{#            padding: 20px;#}
+{#            background-color: #f9f9f9;#}
+{#        }#}
+{#        h1 {#}
+{#            text-align: center;#}
+{#            color: #2980b9;#}
+{#        }#}
+{#        table {#}
+{#            width: 100%;#}
+{#            border-collapse: collapse;#}
+{#            margin-top: 20px;#}
+{#        }#}
+{#        th, td {#}
+{#            padding: 10px;#}
+{#            text-align: left;#}
+{#            border-bottom: 1px solid #ddd;#}
+{#        }#}
+{#        th {#}
+{#            background-color: #2980b9;#}
+{#            color: white;#}
+{#        }#}
+{#        a {#}
+{#            text-decoration: none;#}
+{#            color: white;#}
+{#            padding: 5px 10px;#}
+{#            border-radius: 5px;#}
+{#        }#}
+{#        .btn-edit {#}
+{#            background-color: #f39c12;#}
+{#        }#}
+{#        .btn-delete {#}
+{#            background-color: #e74c3c;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#    <h1>Manage Articles</h1>#}
+{#    <table>#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Title</th>#}
+{#                <th>Author</th>#}
+{#                <th>Date</th>#}
+{#                <th>Actions</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#            {% for article in articles_list %}#}
+{#            <tr>#}
+{#                <td>{{ article.title }}</td>#}
+{#                <td>{{ article.author }}</td>#}
+{#                <td>{{ article.date }}</td>#}
+{#                <td>#}
+{#                    <a href="#" class="btn-edit">Edit</a>#}
+{#                    <a href="#" class="btn-delete" onclick="return confirm('Are you sure you want to delete this article?');">Delete</a>#}
+{#                </td>#}
+{#            </tr>#}
+{#            {% empty %}#}
+{#            <tr>#}
+{#                <td colspan="4" style="text-align: center;">No articles found.</td>#}
+{#            </tr>#}
+{#            {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#</body>#}
+{#</html>#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #2980b9;
+            color: white;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .btn-edit {
+            background-color: #f39c12;
+        }
+        .btn-delete {
+            background-color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Articles</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles_list %}
+            <tr>
+                <td>{{ article.title }}</td>
+                <td>{{ article.author }}</td>
+                <td>{{ article.updated_at }}</td>
+                <td>
+                    <a href="{% url 'edit_article' article.id %}" class="btn-edit">Edit</a>
+                    <a href="{% url 'delete_article' article.id %}" class="btn-delete" onclick="return confirm('Are you sure you want to delete this article?');">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center;">No articles found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+

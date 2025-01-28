@@ -18,6 +18,11 @@ from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from datetime import datetime, timedelta
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.conf import settings
+
 from django.contrib.auth.models import User
 User = get_user_model()
 
@@ -53,20 +58,38 @@ def signup_view(request):
 #     return render(request, 'home.html')
 
 
+
+# def contact_us(request):
+#     if request.method == 'POST':
+#         form = ContactForm(request.POST)
+#         if form.is_valid():
+#             form.save()  # Save the form data to the database
+#             messages.success(request, 'Thank you! Your message has been sent.')
+#             return redirect('contact_us')  # Redirect back to the contact page
+#     else:
+#         form = ContactForm()
+#
+#     return render(request, 'contact.html', {'form': form})
+# def contact_us(request):
+#     if request.method == 'POST':
+#         form = ContactForm(request.POST)
+#         if form.is_valid():
+#             form.save()  # This will save the form data to the database
+#             return redirect('success_url')  # Redirect to a new URL:
+#     else:
+#         form = ContactForm()
+#
+#     return render(request, 'contact.html', {'form': form})
 def contact_us(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()  # Save the form data to the database
-            messages.success(request, 'Thank you! Your message has been sent.')
-            return redirect('contact_us')  # Redirect back to the contact page
+            form.save()  # This will save the contact data to the database
+            return redirect('contact_success')  # Redirect after form submission
     else:
         form = ContactForm()
 
-    return render(request, 'contact.html', {'form': form})
-
-
-
+    return render(request, 'contact_us.html', {'form': form})
 
 def news_list(request):
     news_lists = News.objects.order_by('-date')  # Fetch news sorted by latest date
@@ -153,10 +176,7 @@ def password_reset_verify(request):
             messages.error(request, 'Invalid verification code.')
 
     return render(request, 'password_reset_verify.html')
-# from django.shortcuts import render, redirect
-# from .models import News, Article, Message
-# from .forms import NewsForm, ArticleForm, MessageForm
-# from django.contrib.auth.models import User
+
 
 def dashboard(request):
     total_news = News.objects.count()
@@ -212,3 +232,95 @@ def delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
     user.delete()
     return redirect('manage_users')
+def deactivate_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.is_active = False
+    user.save()
+    return redirect('manage_users')  # Replace with your actual view name for managing users
+def revoke_admin(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.is_staff = False
+    user.save()
+    return redirect('manage_users')
+def grant_admin(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.is_staff = True
+    user.save()
+    return redirect('manage_users')
+
+def activate_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.is_active = True
+    user.save()
+    return redirect('manage_users')
+
+def redirect_to_home(request):
+    return redirect('home')
+def manage_news(request):
+    news = News.objects.all()
+    return render(request,'manage_news.html', {'news': news})
+def articles(request):
+    # Example data for articles; replace with your database query
+    articles_list = [
+        {"title": "Article 1", "author": "Author A", "date": "2025-01-10"},
+        {"title": "Article 2", "author": "Author B", "date": "2025-01-20"},
+    ]
+    return render(request, 'articles.html', {'articles_list': articles_list})
+# def messages(request):
+#     messages=Contact.objects.all()
+#     return render(request, 'messages.html', {'messages': messages})
+def articles(request):
+    # Fetch articles from the database (adjust the query as needed)
+    articles_list = Article.objects.all()
+    return render(request, 'articles.html', {'articles_list': articles_list})
+
+def delete_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    article.delete()
+    return redirect('articles')
+def edit_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('articles')
+    else:
+        form = ArticleForm(instance=article)
+
+    return render(request, 'edit_article.html', {'form': form})
+
+def add_article(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('articles')  # Redirect to the articles list
+    else:
+        form = ArticleForm()
+
+    return render(request, 'add_article.html', {'form': form})
+
+
+def messages(request):
+    if request.method == "POST":
+        message_id = request.POST.get('message_id')
+        reply_body = request.POST.get('body')
+        try:
+            message = Contact.objects.get(id=message_id)
+            subject = f"Reply to your message: {message.message}"  # You can modify this to fit your model
+            # Prepare the email content
+            body = f"Hi {message.name},\n\n{reply_body}\n\nBest regards,\nYour Team"
+            send_mail(
+                subject,           # Subject of the email
+                body,              # Body of the email (the reply message)
+                settings.DEFAULT_FROM_EMAIL,  # Sender email from your Django settings
+                [message.email],   # Receiver email (sender of the message)
+                fail_silently=False
+            )
+            return HttpResponse("Reply sent successfully.")
+        except Contact.DoesNotExist:
+            return HttpResponse("Message not found.", status=404)
+
+    messages = Contact.objects.all()  # Get all messages
+    return render(request, 'messages.html', {'messages': messages})
